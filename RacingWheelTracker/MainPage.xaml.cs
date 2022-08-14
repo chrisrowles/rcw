@@ -17,78 +17,105 @@ using Windows.Gaming.Input.Custom;
 using Windows.Gaming.Input.ForceFeedback;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-
-
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using System.Threading.Tasks;
+using System.Text;
 
 namespace RacingWheelTracker
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// MonkaSteer (or some shit).
     /// </summary>
     public sealed partial class MainPage : Page
     {
         private readonly object refLock = new object();
 
-        private List<RawGameController> racingWheels = new List<RawGameController>();
+        private List<RawGameController> controllers = new List<RawGameController>();
 
-        private RawGameController activeRacingWheel;
+        private RawGameController activeController;
 
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+        private ulong currentReading;
+
+        private bool[] controllerButtonMap;
+
+        private double[] controllerAxisMap;
+
+        private GameControllerSwitchPosition[] controllerSwitchMap;
+
+        private Task pollingTask;
+
+        private bool taskRunning = true;
 
         public MainPage()
         {
             this.InitializeComponent();
         }
 
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void InitActiveController(object sender, RoutedEventArgs e)
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.DetectConnectedControllers();
+
+            if (controllers.Count > 0)
+            {
+                this.activeController = controllers.First();
+                this.ControllerDisplayName.Text = this.activeController.DisplayName;
+            }
+            else
+            {
+                this.ControllerDisplayName.Text = "No controller detected.";
+            }
         }
 
 
-        private void GetRacingWheels()
+        private void DetectConnectedControllers()
         {
             lock (refLock)
             {
-                foreach (var racingWheel in RawGameController.RawGameControllers)
+                foreach (var controller in RawGameController.RawGameControllers)
                 {
-                    bool racingWheelInList = racingWheels.Contains(racingWheel);
+                    bool controllerInList = controllers.Contains(controller);
 
-                    if (!racingWheelInList)
+                    if (!controllerInList)
                     {
-                        racingWheels.Add(racingWheel);
+                        controllers.Add(controller);
                     }
                 }
             }
         }
 
-        private ulong GetCurrentReading(RawGameController racingWheel)
+        private void InitControllerTracking(object sender, RoutedEventArgs e)
         {
-            bool[] buttonArray = new bool[racingWheel.ButtonCount];
-            double[] axisArray = new double[racingWheel.AxisCount];
-            GameControllerSwitchPosition[] switchArray = new GameControllerSwitchPosition[racingWheel.ButtonCount];
+            this.controllerButtonMap = new bool[this.activeController.ButtonCount];
+            this.controllerAxisMap = new double[this.activeController.AxisCount];
+            this.controllerSwitchMap = new GameControllerSwitchPosition[this.activeController.ButtonCount];
 
-            return racingWheel.GetCurrentReading(buttonArray, switchArray, axisArray);
+            this.pollingTask = Task.Run(() => PollController());
         }
 
-        private RawGameController GetActiveRacingWheel()
+        private void StartControllerTracking(object sender, RoutedEventArgs e)
         {
-            return racingWheels.First();
+            this.taskRunning = true;
         }
 
-        private void ConnectToController(object sender, RoutedEventArgs e)
+        private void StopControllerTracking(object sender, RoutedEventArgs e)
         {
-            this.GetRacingWheels();
+            this.taskRunning = false;
+        }
 
-            if (racingWheels.Count > 0)
+        private async Task PollController()
+        {
+            while (true)
             {
-                this.activeRacingWheel = GetActiveRacingWheel();
-                this.ControllerName.Text = this.activeRacingWheel.DisplayName;
-            } else
-            {
-                this.ControllerName.Text = "No controller detected.";
+                if (taskRunning)
+                {
+                    this.currentReading = this.activeController.GetCurrentReading(this.controllerButtonMap, this.controllerSwitchMap, this.controllerAxisMap);
+
+                    this.ActiveReadingId.Text = this.currentReading.ToString();
+                    this.CurrentThrottle.Text = "1";
+                    this.CurrentBrake.Text = "1";
+                    this.CurrentXAxis.Text = this.controllerAxisMap.First().ToString();
+                }
+
+                await Task.Delay(50);
             }
         }
     }
