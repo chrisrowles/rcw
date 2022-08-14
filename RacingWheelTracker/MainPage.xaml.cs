@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Text;
+using Windows.UI.ViewManagement;
 
 namespace RacingWheelTracker
 {
@@ -44,6 +45,10 @@ namespace RacingWheelTracker
 
         private double[] controllerAxisMap;
 
+        private double xAxisCurrentValue;
+
+        private string xAxisDirection;
+
         private GameControllerSwitchPosition[] controllerSwitchMap;
 
         private bool taskRunning = true;
@@ -51,6 +56,9 @@ namespace RacingWheelTracker
         public MainPage()
         {
             InitializeComponent();
+
+            ApplicationView.PreferredLaunchViewSize = new Size(1000, 800);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
         }
 
         public void OnControllerAdded(RawGameController controller)
@@ -151,9 +159,20 @@ namespace RacingWheelTracker
 
         private void SetActiveControllerMaps()
         {
+            var xAxisNextValue = controllerAxisMap.ElementAt(0);
+
             CurrentThrottle.Text = controllerAxisMap.ElementAt(2).ToString();
             CurrentBrake.Text = controllerAxisMap.ElementAt(3).ToString();
-            CurrentXAxis.Text = controllerAxisMap.ElementAt(0).ToString();
+            CurrentXAxis.Text = xAxisNextValue.ToString();
+
+            xAxisDirection = xAxisNextValue > xAxisCurrentValue
+                ? "Right"
+                : "Left";
+
+            xAxisCurrentValue = xAxisNextValue;
         }
+
+        private void SetControllerDirection()
+        { }
     }
 }
