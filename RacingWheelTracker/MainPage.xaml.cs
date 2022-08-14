@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Gaming.Input;
 using Windows.Gaming.Input.Custom;
 using Windows.Gaming.Input.ForceFeedback;
+using Windows.UI.Core;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -33,6 +34,10 @@ namespace RacingWheelTracker
 
         private RawGameController activeController;
 
+        private static event EventHandler<RawGameController> ControllerAdded;
+
+        private static event EventHandler<RawGameController> ControllerRemoved;
+
         private ulong currentReading;
 
         private bool[] controllerButtonMap;
@@ -41,30 +46,82 @@ namespace RacingWheelTracker
 
         private GameControllerSwitchPosition[] controllerSwitchMap;
 
-        private Task pollingTask;
-
         private bool taskRunning = true;
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
-        private void InitActiveController(object sender, RoutedEventArgs e)
+        public void OnControllerAdded(RawGameController controller)
         {
-            this.DetectConnectedControllers();
+            EventHandler<RawGameController> handler = ControllerAdded;
+            handler?.Invoke(this, controller);
+
+            bool controllerInList = controllers.Contains(controller);
+
+            if (!controllerInList)
+            {
+                controllers.Add(controller);
+            }
+        }
+
+        public void OnControllerRemoved(RawGameController controller)
+        {
+            EventHandler<RawGameController> handler = ControllerRemoved;
+            handler?.Invoke(this, controller);
+
+            bool controllerInList = controllers.Contains(controller);
+
+            if (!controllerInList)
+            {
+                controllers.Remove(controller);
+            }
+        }
+
+        public void InitActiveController(object sender, RoutedEventArgs e)
+        {
+            DetectConnectedControllers();
 
             if (controllers.Count > 0)
             {
-                this.activeController = controllers.First();
-                this.ControllerDisplayName.Text = this.activeController.DisplayName;
+                activeController = controllers.First();
+                ControllerDisplayName.Text = activeController.DisplayName;
             }
             else
             {
-                this.ControllerDisplayName.Text = "No controller detected.";
+                ControllerDisplayName.Text = "No controller detected.";
             }
         }
 
+        public void InitControllerTracking(object sender, RoutedEventArgs e)
+        {
+            controllerButtonMap = new bool[activeController.ButtonCount];
+            controllerAxisMap = new double[activeController.AxisCount];
+            controllerSwitchMap = new GameControllerSwitchPosition[activeController.ButtonCount];
+
+            SetActiveControllerMaps();
+
+            Task.Run(() => TrackActiveController());
+        }
+
+        private async Task TrackActiveController()
+        {
+            while (true)
+            {
+                if (taskRunning)
+                {
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+                        currentReading = activeController.GetCurrentReading(controllerButtonMap, controllerSwitchMap, controllerAxisMap);
+
+                        ActiveReadingId.Text = currentReading.ToString();
+                        SetActiveControllerMaps();
+                    });
+                }
+
+                await Task.Delay(50);
+            }
+        }
 
         private void DetectConnectedControllers()
         {
@@ -82,41 +139,21 @@ namespace RacingWheelTracker
             }
         }
 
-        private void InitControllerTracking(object sender, RoutedEventArgs e)
-        {
-            this.controllerButtonMap = new bool[this.activeController.ButtonCount];
-            this.controllerAxisMap = new double[this.activeController.AxisCount];
-            this.controllerSwitchMap = new GameControllerSwitchPosition[this.activeController.ButtonCount];
-
-            this.pollingTask = Task.Run(() => PollController());
-        }
-
         private void StartControllerTracking(object sender, RoutedEventArgs e)
         {
-            this.taskRunning = true;
+            taskRunning = true;
         }
 
         private void StopControllerTracking(object sender, RoutedEventArgs e)
         {
-            this.taskRunning = false;
+            taskRunning = false;
         }
 
-        private async Task PollController()
+        private void SetActiveControllerMaps()
         {
-            while (true)
-            {
-                if (taskRunning)
-                {
-                    this.currentReading = this.activeController.GetCurrentReading(this.controllerButtonMap, this.controllerSwitchMap, this.controllerAxisMap);
-
-                    this.ActiveReadingId.Text = this.currentReading.ToString();
-                    this.CurrentThrottle.Text = "1";
-                    this.CurrentBrake.Text = "1";
-                    this.CurrentXAxis.Text = this.controllerAxisMap.First().ToString();
-                }
-
-                await Task.Delay(50);
-            }
+            CurrentThrottle.Text = controllerAxisMap.ElementAt(2).ToString();
+            CurrentBrake.Text = controllerAxisMap.ElementAt(3).ToString();
+            CurrentXAxis.Text = controllerAxisMap.ElementAt(0).ToString();
         }
     }
 }

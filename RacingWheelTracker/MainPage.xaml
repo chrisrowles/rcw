@@ -18,9 +18,13 @@
         <TextBlock HorizontalAlignment="Left" Margin="89,141,0,0" TextWrapping="Wrap" Text="Current Reading ID:" VerticalAlignment="Top" Height="25" Width="160"/>
         <TextBox x:Name="ActiveReadingId" HorizontalAlignment="Left" Margin="272,125,0,0" TextWrapping="Wrap" Text="{Binding Path=ActiveReadingId, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="50" Width="420"/>
 
-        <TextBlock x:Name="CurrentThrottle" HorizontalAlignment="Left" Margin="790,69,0,0" TextWrapping="Wrap"  Text="{Binding Path=CurrentThrottle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
-        <TextBlock x:Name="CurrentBrake" HorizontalAlignment="Left" Margin="790,105,0,0" TextWrapping="Wrap" Text="{Binding Path=CurrentBrake, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
-        <TextBlock x:Name="CurrentXAxis" HorizontalAlignment="Left" Margin="790,141,0,0" TextWrapping="Wrap" Text="{Binding Path=CurrentXAxis, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="790,69,0,0" TextWrapping="Wrap"  Text="Throttle:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="790,105,0,0" TextWrapping="Wrap" Text="Brake:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="790,141,0,0" TextWrapping="Wrap" Text="X-Axis Rotation:" VerticalAlignment="Top"/>
+        
+        <TextBlock x:Name="CurrentThrottle" HorizontalAlignment="Left" Margin="850,69,0,0" TextWrapping="Wrap"  Text="{Binding Path=CurrentThrottle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
+        <TextBlock x:Name="CurrentBrake" HorizontalAlignment="Left" Margin="850,105,0,0" TextWrapping="Wrap" Text="{Binding Path=CurrentBrake, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
+        <TextBlock x:Name="CurrentXAxis" HorizontalAlignment="Left" Margin="900,141,0,0" TextWrapping="Wrap" Text="{Binding Path=CurrentXAxis, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
         
         <Button Content="Start" Height="50" Width="80" Click="StartControllerTracking" Margin="557,202,0,0" VerticalAlignment="Top"/>
         <Button Content="Stop" Height="50" Width="80" Click="StopControllerTracking" Margin="651,202,0,0" VerticalAlignment="Top"/>
