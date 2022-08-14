@@ -161,13 +161,15 @@ namespace RacingWheelTracker
         {
             var xAxisNextValue = controllerAxisMap.ElementAt(0);
 
-            CurrentThrottle.Text = controllerAxisMap.ElementAt(2).ToString();
-            CurrentBrake.Text = controllerAxisMap.ElementAt(3).ToString();
-            CurrentXAxis.Text = xAxisNextValue.ToString();
+            CurrentThrottle.Text = Math.Round(controllerAxisMap.ElementAt(2), 4).ToString();
+            CurrentBrake.Text = Math.Round(controllerAxisMap.ElementAt(3), 4).ToString();
+            CurrentXAxis.Text = Math.Round(xAxisNextValue - 0.5022, 4).ToString();
 
             xAxisDirection = xAxisNextValue > xAxisCurrentValue
                 ? "Right"
                 : "Left";
+
+            CurrentXAxisDirection.Text = xAxisDirection;
 
             xAxisCurrentValue = xAxisNextValue;
         }

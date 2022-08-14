@@ -29,5 +29,7 @@
         <Button Content="Start" Height="50" Width="80" Click="StartControllerTracking" Margin="517,625,0,0" VerticalAlignment="Top"/>
         <Button Content="Stop" Height="50" Width="80" Click="StopControllerTracking" Margin="611,625,0,0" VerticalAlignment="Top"/>
         <Image HorizontalAlignment="Left" Height="336" Margin="56,8,0,0" VerticalAlignment="Top" Width="327" Source="/Assets/monkasteer.gif"/>
+        <TextBlock HorizontalAlignment="Left" Margin="456,439,0,0" TextWrapping="Wrap" Text="X-Axis Direction:" VerticalAlignment="Top"/>
+        <TextBlock x:Name="CurrentXAxisDirection" HorizontalAlignment="Left" Margin="565,440,0,0" TextWrapping="Wrap" Text="{Binding CurrentXAxisDirection, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
     </Grid>
 </Page>
