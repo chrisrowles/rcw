@@ -30,7 +30,6 @@ namespace RacingWheelTracker
         /// </summary>
         private RawGameController activeController;
 
-
         /// <summary>
         /// Handler for detecting controller connection.
         /// </summary>
@@ -218,7 +217,6 @@ namespace RacingWheelTracker
         {
             taskRunning = true;
         }
-
 
         /// <summary>
         /// Set the task to true to stop running it.
