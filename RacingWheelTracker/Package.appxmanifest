@@ -45,8 +45,6 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
-    <uap:Capability Name="picturesLibrary"/>
-    <iot:Capability Name="systemManagement"/>
 	<DeviceCapability Name="humaninterfacedevice">
 		<Device Id="any">
 			<Function Type="usage:0001 0004"/>
