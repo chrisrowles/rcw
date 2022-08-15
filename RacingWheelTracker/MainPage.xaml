@@ -9,14 +9,14 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="49,497,0,0" TextWrapping="Wrap" Text="Connected Device Name:" VerticalAlignment="Top" Height="25" Width="160"/>
-        <TextBox x:Name="ControllerDisplayName" HorizontalAlignment="Left" Margin="232,481,0,0" TextWrapping="Wrap" Text="{Binding Path=ControllerDisplayName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="50" Width="420"/>
+        <TextBlock HorizontalAlignment="Left" Margin="49,497,0,0" TextWrapping="Wrap" Text="Connected Device:" VerticalAlignment="Top"/>
+        <TextBlock x:Name="ControllerDisplayName" HorizontalAlignment="Left" Margin="185,498,0,0" Text="{Binding Path=ControllerDisplayName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
 
-        <Button Content="Connect" Height="50" Width="181" Click="InitActiveController" Margin="49,625,0,0" VerticalAlignment="Top"/>
-        <Button Content="Init Tracking" Height="50" Width="181" Click="InitControllerTracking" Margin="303,625,0,0" VerticalAlignment="Top"/>
+        <Button Content="Connect" Height="31" Width="109" Click="InitActiveController" Margin="50,592,0,0" VerticalAlignment="Top"/>
+        <Button Content="Init Tracking" Height="31" Width="109" Click="InitControllerTracking" Margin="170,592,0,0" VerticalAlignment="Top"/>
 
-        <TextBlock HorizontalAlignment="Left" Margin="49,570,0,0" TextWrapping="Wrap" Text="Current Reading ID:" VerticalAlignment="Top" Height="25" Width="160"/>
-        <TextBox x:Name="ActiveReadingId" HorizontalAlignment="Left" Margin="232,553,0,0" TextWrapping="Wrap" Text="{Binding Path=ActiveReadingId, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="50" Width="420"/>
+        <TextBlock HorizontalAlignment="Left" Margin="49,533,0,0" TextWrapping="Wrap" Text="Current Reading ID:" VerticalAlignment="Top"/>
+        <TextBlock x:Name="ActiveReadingId" HorizontalAlignment="Left" Margin="185,534,0,0" TextWrapping="Wrap" Text="{Binding Path=ActiveReadingId, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
 
         <TextBlock HorizontalAlignment="Left" Margin="52,367,0,0" TextWrapping="Wrap"  Text="Throttle:" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="52,403,0,0" TextWrapping="Wrap" Text="Brake:" VerticalAlignment="Top"/>
@@ -26,8 +26,8 @@
         <TextBlock x:Name="CurrentBrake" HorizontalAlignment="Left" Margin="95,403,0,0" TextWrapping="Wrap" Text="{Binding Path=CurrentBrake, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
         <TextBlock x:Name="CurrentXAxis" HorizontalAlignment="Left" Margin="155,440,0,0" TextWrapping="Wrap" Text="{Binding Path=CurrentXAxis, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
 
-        <Button Content="Start" Height="50" Width="80" Click="StartControllerTracking" Margin="517,625,0,0" VerticalAlignment="Top"/>
-        <Button Content="Stop" Height="50" Width="80" Click="StopControllerTracking" Margin="611,625,0,0" VerticalAlignment="Top"/>
+        <Button Content="Start" Height="31" Width="109" Click="StartControllerTracking" Margin="390,592,0,0" VerticalAlignment="Top"/>
+        <Button Content="Stop" Height="31" Width="109" Click="StopControllerTracking" Margin="510,592,0,0" VerticalAlignment="Top"/>
         <Image HorizontalAlignment="Left" Height="336" Margin="56,8,0,0" VerticalAlignment="Top" Width="327" Source="/Assets/monkasteer.gif"/>
         <TextBlock HorizontalAlignment="Left" Margin="456,439,0,0" TextWrapping="Wrap" Text="X-Axis Direction:" VerticalAlignment="Top"/>
         <TextBlock x:Name="CurrentXAxisDirection" HorizontalAlignment="Left" Margin="565,440,0,0" TextWrapping="Wrap" Text="{Binding CurrentXAxisDirection, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>

@@ -9,14 +9,14 @@
 
   <Identity
     Name="f366c84d-adf5-4248-842f-7cc614c74f2b"
-    Publisher="CN=chris"
-    Version="1.0.0.0" />
+    Publisher="CN=Chris Rowles"
+    Version="0.1.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="f366c84d-adf5-4248-842f-7cc614c74f2b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>RacingWheelTracker</DisplayName>
-    <PublisherDisplayName>chris</PublisherDisplayName>
+    <DisplayName>Monkasteer - Pepe Driving Companion</DisplayName>
+    <PublisherDisplayName>Chris Rowles</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -33,11 +33,10 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="RacingWheelTracker.App">
       <uap:VisualElements
-        DisplayName="RacingWheelTracker"
+        DisplayName="Monkasteer - Pepe Driving Companion"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="RacingWheelTracker"
-        BackgroundColor="transparent">
+        BackgroundColor="transparent" Description="“Leave me alone, I know what I’m doing.” - Kimi Räikkönen">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>

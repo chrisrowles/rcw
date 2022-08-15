@@ -1,32 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Windows.Gaming.Input;
-using Windows.Gaming.Input.Custom;
-using Windows.Gaming.Input.ForceFeedback;
 using Windows.UI.Core;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Text;
 using Windows.UI.ViewManagement;
 
 namespace RacingWheelTracker
 {
-    /// <summary>
-    /// MonkaSteer (or some shit).
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         private readonly object refLock = new object();
@@ -47,8 +31,6 @@ namespace RacingWheelTracker
 
         private double xAxisCurrentValue;
 
-        private string xAxisDirection;
-
         private GameControllerSwitchPosition[] controllerSwitchMap;
 
         private bool taskRunning = true;
@@ -57,7 +39,7 @@ namespace RacingWheelTracker
         {
             InitializeComponent();
 
-            ApplicationView.PreferredLaunchViewSize = new Size(1000, 800);
+            ApplicationView.PreferredLaunchViewSize = new Size(750, 650);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
         }
 
@@ -165,11 +147,12 @@ namespace RacingWheelTracker
             CurrentBrake.Text = Math.Round(controllerAxisMap.ElementAt(3), 4).ToString();
             CurrentXAxis.Text = Math.Round(xAxisNextValue - 0.5022, 4).ToString();
 
-            xAxisDirection = xAxisNextValue > xAxisCurrentValue
-                ? "Right"
-                : "Left";
-
-            CurrentXAxisDirection.Text = xAxisDirection;
+            if (xAxisNextValue != xAxisCurrentValue)
+            {
+                CurrentXAxisDirection.Text = xAxisNextValue > xAxisCurrentValue
+                    ? "Right"
+                    : "Left";
+            }
 
             xAxisCurrentValue = xAxisNextValue;
         }
