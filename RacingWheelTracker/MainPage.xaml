@@ -10,10 +10,10 @@
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="49,497,0,0" TextWrapping="Wrap" Text="Connected Device:" VerticalAlignment="Top"/>
-        <TextBlock x:Name="ControllerDisplayName" HorizontalAlignment="Left" Margin="185,498,0,0" Text="{Binding Path=ControllerDisplayName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
+        <TextBlock x:Name="ControllerDisplayLabel" HorizontalAlignment="Left" Margin="185,498,0,0" Text="{Binding Path=ControllerDisplayName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
 
-        <Button Content="Connect" Height="31" Width="109" Click="InitActiveController" Margin="50,592,0,0" VerticalAlignment="Top"/>
-        <Button Content="Init Tracking" Height="31" Width="109" Click="InitControllerTracking" Margin="170,592,0,0" VerticalAlignment="Top"/>
+        <Button Content="Connect" Height="31" Width="109" Click="ConnectButtonClick" Margin="50,592,0,0" VerticalAlignment="Top"/>
+        <Button Content="Init Tracking" Height="31" Width="109" Click="InitTrackingButtonClick" Margin="170,592,0,0" VerticalAlignment="Top"/>
 
         <TextBlock HorizontalAlignment="Left" Margin="49,533,0,0" TextWrapping="Wrap" Text="Current Reading ID:" VerticalAlignment="Top"/>
         <TextBlock x:Name="ActiveReadingId" HorizontalAlignment="Left" Margin="185,534,0,0" TextWrapping="Wrap" Text="{Binding Path=ActiveReadingId, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
@@ -26,10 +26,10 @@
         <TextBlock x:Name="CurrentBrake" HorizontalAlignment="Left" Margin="95,403,0,0" TextWrapping="Wrap" Text="{Binding Path=CurrentBrake, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
         <TextBlock x:Name="CurrentXAxis" HorizontalAlignment="Left" Margin="155,440,0,0" TextWrapping="Wrap" Text="{Binding Path=CurrentXAxis, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
 
-        <Button Content="Start" Height="31" Width="109" Click="StartControllerTracking" Margin="390,592,0,0" VerticalAlignment="Top"/>
-        <Button Content="Stop" Height="31" Width="109" Click="StopControllerTracking" Margin="510,592,0,0" VerticalAlignment="Top"/>
+        <Button Content="Start" Height="31" Width="109" Click="StartControllerTrackingButtonClick" Margin="390,592,0,0" VerticalAlignment="Top"/>
+        <Button Content="Stop" Height="31" Width="109" Click="StopControllerTrackingButtonClick" Margin="510,592,0,0" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="456,439,0,0" TextWrapping="Wrap" Text="X-Axis Direction:" VerticalAlignment="Top"/>
         <TextBlock x:Name="CurrentXAxisDirection" HorizontalAlignment="Left" Margin="565,440,0,0" TextWrapping="Wrap" Text="{Binding CurrentXAxisDirection, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
-        <WebView x:Name="WebViewM" HorizontalAlignment="Left" Height="341" Margin="50,21,0,0" VerticalAlignment="Top" Width="597"/>
+        <WebView x:Name="controllerTrackingFrame" HorizontalAlignment="Left" Height="341" Margin="50,21,0,0" VerticalAlignment="Top" Width="597"/>
     </Grid>
 </Page>
